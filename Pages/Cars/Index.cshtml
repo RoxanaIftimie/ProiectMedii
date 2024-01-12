@@ -1,0 +1,91 @@
+﻿@page "/"
+@model CarAplication.Pages.Cars.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 style="align-content:center">Cars List</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by Model:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            
+           
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.ModelSort">
+                    @Html.DisplayNameFor(model => model.Car[0].Name)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.PriceSort">
+                @Html.DisplayNameFor(model => model.Car[0].Price)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].AvailableDate)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.Car[0].Brand.BrandName)
+            </th>
+            
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Car)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.CarID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+                
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvailableDate)
+                </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.Brand.BrandName)
+                    </td>
+               
+                
+
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a> |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
